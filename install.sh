@@ -64,6 +64,37 @@ if [ "$UID" -eq "$ROOT_UID" ]; then
 
   cp -a ${THEME_NAME}/* ${THEME_DIR}/${THEME_NAME}
 
+  # Generate GRUB font files to ensure compatibility
+  prompt -i "\nGenerating GRUB font files...\n"
+  
+  if has_command grub-mkfont; then
+    cd "${THEME_DIR}/${THEME_NAME}"
+    
+    # Generate Dersu Uzala brush fonts
+    if [ -f "Dersu Uzala brush.ttf" ]; then
+      prompt -i "Generating Dersu Uzala brush fonts..."
+      grub-mkfont -s 16 -o "dersu_uzala_brush_16.pf2" "Dersu Uzala brush.ttf" 2>/dev/null || prompt -w "Failed to generate dersu_uzala_brush_16.pf2"
+      grub-mkfont -s 54 -o "dersu_uzala_brush_54.pf2" "Dersu Uzala brush.ttf" 2>/dev/null || prompt -w "Failed to generate dersu_uzala_brush_54.pf2"  
+      grub-mkfont -s 60 -o "dersu_uzala_brush_60.pf2" "Dersu Uzala brush.ttf" 2>/dev/null || prompt -w "Failed to generate dersu_uzala_brush_60.pf2"
+    else
+      prompt -w "Dersu Uzala brush.ttf not found, using pre-compiled fonts"
+    fi
+    
+    # Generate Fira Code fonts
+    if [ -f "FiraCode-Regular.ttf" ]; then
+      prompt -i "Generating Fira Code fonts..."
+      grub-mkfont -s 16 -o "fira_code_16.pf2" "FiraCode-Regular.ttf" 2>/dev/null || prompt -w "Failed to generate fira_code_16.pf2"
+      grub-mkfont -s 20 -o "fira_code_20.pf2" "FiraCode-Regular.ttf" 2>/dev/null || prompt -w "Failed to generate fira_code_20.pf2"
+    else
+      prompt -w "FiraCode-Regular.ttf not found, using pre-compiled fonts"
+    fi
+    
+    prompt -s "Font generation completed."
+  else
+    prompt -w "grub-mkfont not found. Using pre-compiled font files."
+    prompt -i "If fonts don't display correctly, install grub2-common (Debian/Ubuntu) or grub2-tools (Fedora/RHEL)"
+  fi
+
 # Set theme
   prompt -i "\nSetting ${THEME_NAME} as default...\n"
 

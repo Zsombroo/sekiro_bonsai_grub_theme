@@ -19,12 +19,12 @@ terminal-border: "0"
     item_padding = 0
     icon_width = 10
     icon_height = 0
-    item_icon_space = 320
+    item_icon_space = 50
     item_spacing = 5
     item_font =  "Dersu Uzala brush Regular 54"
-    item_color = "#000000"
+    item_color = "#5f3e2a"
     selected_item_font = "Dersu Uzala brush Regular 54"
-    selected_item_color = "#b14046"
+    selected_item_color = "#f9e398"
     selected_item_pixmap_style = "select_*.png"
 }
 
